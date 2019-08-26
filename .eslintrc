@@ -1,0 +1,33 @@
+{
+  "extends": [
+    "standard"
+  ],
+  "globals": {
+    "App": true,
+    "Component": true,
+    "Page": true,
+    "__ALIPAY__": true,
+    "__DEV__": true,
+    "__WECHAT__": true,
+    "getApp": true,
+    "my": true,
+    "wx": true
+  },
+  "rules": {
+    "space-before-function-paren": [
+      "error",
+      {
+        "anonymous": "ignore",
+        "named": "ignore",
+        "asyncArrow": "always"
+      }
+    ]
+  },
+  "settings": {
+    "import/resolver": {
+      "webpack": {
+        "config": "webpack.config.babel.js"
+      }
+    }
+  }
+}

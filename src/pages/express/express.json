@@ -1,0 +1,9 @@
+{
+	"usingComponents": {
+		"kuaidi": "plugin://express/reglogis-component",
+		"avatar": "../../components/avatar/avatar"
+	},
+	"navigationBarBackgroundColor": "#418BF0",
+	"navigationBarTitleText": "快递查询",
+	"backgroundColor":"#eee"
+}

@@ -1,0 +1,7 @@
+
+{
+  "usingComponents": {
+    "tianqi": "../../components/tianqi/tianqi",
+    "avatar": "../../components/avatar/avatar"
+  }
+}

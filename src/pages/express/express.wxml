@@ -1,0 +1,49 @@
+<view class="container">
+	<avatar/>
+	<view class="form-list">
+		<text class="form-lable">物流单号:</text>
+		<input type="text" bindinput="setCode" value="{{LogisticCode}}"/>
+	</view>
+	<view class="form-list">
+		<text class="form-lable">物流公司:</text>
+		<picker mode="selector" bindchange="bindMultiPickerChange"value="{{multiIndex}}"  range="{{expressArray}}">
+			<view class="picker-info"  wx:if="{{multiIndex && expressArray[multiIndex]}}">
+				{{expressArray[multiIndex]}}
+			</view>
+			<view class="picker-info"  wx:else>
+				请选择物流公司
+			</view>
+		</picker>
+	</view>
+	<button class="btn-query" size="mini" type="primary" bindtap="queryExpress">查询物流信息</button>
+	<view class="history">
+		<view class="histary-title">查询记录</view>
+		<view wx:if="{{history.length<1}}">暂无查询记录</view>
+		<scroll-view  wx:else scroll-y style="width: 100%" class="table">
+			<view class="table-row">
+				<view class="table-col">物流单号</view>
+				<view class="table-col">物流公司</view>
+				<view class="table-col">操作</view>
+			</view>
+			<view class="table-row" wx:for="{{history}}">
+				<view class="table-col">
+					<text>{{item.LogisticCode}}</text>
+				</view>
+				<view class="table-col">
+					<text>{{item.expressZh}}</text>
+				</view>
+				<view class="table-col">
+					<button size="mini" type="primary" bindtap="queryHistary" data-text="{{item}}">查看</button>
+					<!-- <button size="mini" type="warn">删除</button> -->
+				</view>
+			</view>
+		</scroll-view>
+	</view>
+	<view class="info-none" wx:if="{{!expressInfo || expressInfo.Traces.length<1}}">{{expressInfo.Reason || '暂无物流信息'}}</view>
+	<scroll-view class="express-info" wx:else scroll-y style="width: 100%">
+		<view class="express-item" wx:for="{{expressInfo.Traces}}">
+			<text>{{item.AcceptTime}}</text>
+			<text>{{item.AcceptStation}}</text>
+		</view>
+	</scroll-view>
+</view>

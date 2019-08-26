@@ -1,0 +1,10 @@
+<view class="container">
+	<picker mode="region" value="region" bindchange="chageCity" >
+		<view class="city-select"><text>{{region[0] ||'北京市'}}</text><text>{{region[1] || "北京市"}}</text><text>{{region[2]||'东城区'}}</text></view>
+	</picker>
+	<swiper class="swiper">
+    	<swiper-item class="swiper-item" wx:for="{{wethar}}">
+      		{{item.week}}
+    	</swiper-item>
+	</swiper>
+</view>

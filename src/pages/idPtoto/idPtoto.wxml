@@ -1,0 +1,12 @@
+<view class="container">
+	<!-- <view class="hidden-canvas"> -->
+		<canvas style="width:{{w}}rpx;height:{{h}}rpx;" canvas-id="myCanvas"></canvas>
+	<!-- </view> -->
+	<button size="default" type="primary" bindtap="getImg">上传照片</button>
+	<view class="img-box">
+		<image class="img" src="{{oldUrl}}" />
+		<image wx:if="{{imgUrl}}" class="new-img img" src="{{imgUrl}}"/>
+	</view>
+	<image src="{{imgUrl}}" bindload='checkwh' mode='widthFix' hidden/>
+	<button  wx:if="{{imgUrl}}" size="default" type="primary" bindtap="oncliak">保存照片</button>
+</view>

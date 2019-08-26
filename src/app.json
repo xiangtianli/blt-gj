@@ -1,0 +1,19 @@
+{
+	"pages": [
+		"pages/index/index",
+		"pages/idPtoto/idPtoto",
+		"pages/express/express"
+	],
+	"window": {
+		"backgroundTextStyle": "light",
+		"navigationBarBackgroundColor": "#fff",
+		"navigationBarTitleText": "便民通生活",
+		"navigationBarTextStyle": "black"
+	},
+	"plugins": {
+		"express": {
+			"version": "1.1.0",
+			"provider": "wxbebb90df8a89c62c"
+		}
+	}
+}

@@ -38,7 +38,6 @@ export function drwaImg(canvasId,imgUrl,w,h,type,size){
   ctx.fillStyle=bgColor;
   // ctx.fillRect(0,0,w,h);
   // ctx.draw();
-  console.log(imgUrl)
   ctx.drawImage(imgUrl,0,0,w,h,0,0,dw,dh);
   ctx.draw()
 }

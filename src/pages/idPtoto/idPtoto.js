@@ -1,5 +1,5 @@
 import {drwaImg, getImgInfo, getBase64Image,createImage} from '../../utils/util'
-import  {uploadFile}  from '../../utils/uploadAliyun.js';
+import {uploadFile} from '../../utils/uploadAliyun'
 Page({
 	data: {
 		title: 'idPtoto',
@@ -32,17 +32,20 @@ Page({
 	       sizeType: ['original', 'compressed'], // 可以指定是原图还是压缩图，默认二者都有  
 	       sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有  
 	       success: function (res) {  
-			   console.log(res.tempFilePaths)
 	        //  返回选定照片的本地文件路径列表，tempFilePath可以作为img标签的src属性显示图片  
-			 uploadFile( res.tempFilePaths[0],
-				"images/",
-				 function (res) {
-				  console.log("上传成功")
-				},
-				 function (res) {
-				  console.log("上传失败")
-				  console.log(res)
-				})
+			 uploadFile( 
+				{
+					filePath: res.tempFilePaths[0],
+					dir: "images/",
+					success: function (res) {
+					  console.log("上传成功")
+					},
+					fail: function (res) {
+					  console.log("上传失败")
+					  console.log(res)
+					}
+				}
+			)
 	       }  
 	     })  
 		console.log(uploadFile)

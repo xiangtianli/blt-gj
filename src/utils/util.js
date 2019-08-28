@@ -52,16 +52,28 @@ export function formatTime(date) {
   }
 }
 
-export function drwaImg(canvasId,imgUrl,w,h,type,size){
-  const ctx = wx.createCanvasContext(canvasId);
-  const dw=size=='one'?295:size=='two'?295:295
-  const dh=size=='one'?413:size=='two'?413:413
-  const bgColor=type=="red"?'#f00':type=="blue"?'#0f0':'#f00'
-  ctx.fillStyle=bgColor;
-  // ctx.fillRect(0,0,w,h);
-  // ctx.draw();
-  ctx.drawImage(imgUrl,0,0,w,h,0,0,dw,dh);
-  ctx.draw()
+export function drwaImg(canvasId,imgUrl,w,h,type,size,cb){
+  cb({message:'正在生成',state:true})
+  wx.getImageInfo({
+    src: imgUrl,
+    success (res) {
+      const ctx = wx.createCanvasContext(canvasId)
+      const dw=size=='one'?295:size=='twoIn'?413:size=='twoOut'?390:295
+      const dh=size=='one'?413:size=='twoIn'?626:size=='twoOut'?567:413
+      const bgColor=type=="red"?'rgb(255,0,0)':type=="blueOut"?'rgb(67,142,219)':type=="white"?'rgb(255,255,255)':type=="blueIn"?'rgb(60,140,220)':'rgb(255,0,0)'
+      ctx.fillStyle=bgColor;
+      if(w>dw ||h>dh){
+        ctx.fillRect(0,0,w,h);
+        ctx.drawImage(imgUrl,0,0,w,h,0,0,dw,dh);
+      }else{
+        ctx.fillRect(0,0,dw,dh);
+        ctx.drawImage(imgUrl,0,0,dw,dh,0,0,dw,dh);
+      }
+      ctx.draw(false,function(){
+        createImage(canvasId,size,cb)
+      })
+    }
+  })
 }
 
 //图片扣人像
@@ -69,6 +81,7 @@ export function getBase64Image() {
   return new Promise((resolve,reject)=>{
     wx.chooseImage({
       success: req => {
+        console.log(req)
       let base64 = wx.getFileSystemManager().readFileSync(req.tempFilePaths[0], 'base64') 
       require({
           "grant_type":"client_credentials",
@@ -94,25 +107,34 @@ export function getBase64Image() {
     })
  }) 
 }
-export function  createImage(canvasId,imageWidth,imageHeight){
+export function  createImage(canvasId,size,cb){
+  const dw=size=='one'?295:size=='twoIn'?413:size=='twoOut'?390:295
+  const dh=size=='one'?413:size=='twoIn'?626:size=='twoOut'?567:413
   wx.canvasToTempFilePath({     //将canvas生成图片
     canvasId: canvasId,
     x: 0,
     y: 0,
-    width: imageWidth,
-    height: imageHeight,
-    destWidth: imageWidth,     //截取canvas的宽度
-    destHeight: imageHeight,   //截取canvas的高度
+    width: dw,
+    height: dh,
+    destWidth: dw,     //截取canvas的宽度
+    destHeight: dh,   //截取canvas的高度
     success: function (res) {
+      console.log(res)
       wx.saveImageToPhotosAlbum({  //保存图片到相册
         filePath: res.tempFilePath,
         success: function () {
+          cb({message:'生成成功',state:false})
           wx.showToast({
             title: "生成图片成功！",
             duration: 2000
           })
         }
       })
+    },
+    fail(err){
+      cb({message:'生成成功',state:false})
+      console.log(err)
+      cb({message:'生成失败'})
     }
   })
 }

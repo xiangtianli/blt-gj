@@ -2,45 +2,97 @@ import {drwaImg, getImgInfo, getBase64Image,createImage, base64src } from '../..
 import {uploadOss} from '../../utils/uploadAliyun'
 Page({
 	data: {
-		title: 'idPtoto',
 		imgUrl:'',
 		w:'',
 		h:'',
-		oldUrl:''
+		type:'red',
+		size:'one',
+		oldUrl:'',
+		localUrl:null,
+		ossUrl:null,
+		disabled:false,
+		types: [
+			{name: 'red', value: '红底',checked: 'true'},
+			{name: 'blueOut', value: '护照'},
+			{name: 'blueIn', value: '蓝底'},
+			{name: 'white', value: '白底'},
+		],
+		sizes: [
+			{name: 'one', value: '一寸',checked: 'true'},
+			{name: 'twoIn', value: '两寸'},
+			{name: 'twoOut', value: '护照两寸'},
+		]
 	},
 	oncliak(e){
-		createImage('myCanvas',295,413)
-	},
-	// checkwh(e){
-	// 	this.setData({
-	// 		w:e.detail.width,
-	// 		h:e.detail.height,
-	// 	})
-	// 	drwaImg('myCanvas', 'https://csdnimg.cn/pubfooter/images/csdn-zx.png', e.detail.width, e.detail.height,'red','one') 
-	// },
-	getImg(){
-		getBase64Image().then(res=>{
-			base64src('data:image/png;base64,'+res.res.foreground,(res)=>{
-				console.log(res)
+		const {type,size,w,h,localUrl,ossUrl,disabled} =this.data
+		if(disabled){
+			wx.showToast({
+				title: "操作太快了，稍等片刻",
+				duration: 1000
 			})
+			setTimeout(()=>{
+				this.setData({
+					disabled:false
+				})
+			},1500)
+			return false
+		}
+		drwaImg('myCanvas', ossUrl, w, h,type,size,(res)=>{
 			this.setData({
-				imgUrl:'data:image/png;base64,'+res.res.foreground,
-				oldUrl:res.req.tempFilePaths[0]
+				disabled:res.state,
+				timeout:res.timeout
+			})
+		}) 
+		if(localUrl && ossUrl && localUrl===ossUrl){
+			drwaImg('myCanvas', ossUrl, w, h,type,size,(res)=>{
+				this.setData({
+					disabled:res.state,
+					timeout:res.timeout
+				})
+			}) 
+		}else{
+			uploadOss( localUrl,'temImg').then(res=>{
+				this.setData({
+					ossUrl:res.url,
+					localUrl:res.url
+				})
+				drwaImg('myCanvas', res.url, w, h,type,size,(res)=>{
+					this.setData({
+						disabled:res.state,
+						timeout:res.timeout
+					})
+				}) 
+			})
+		}
+	},
+	changeType(e){
+		this.setData({
+			type:e.detail.value
+		})
+	},
+	changeSize(e){
+		this.setData({
+			size:e.detail.value
+		})
+	},
+	checkwh(e){
+		this.setData({
+			w:e.detail.width,
+			h:e.detail.height,
+		})
+	},
+	getImg(){
+		getBase64Image().then(req=>{
+			base64src('data:image/jpeg;base64,'+req.res.foreground,(res)=>{
+				this.setData({
+					imgUrl:'data:image/jpeg;base64,'+req.res.foreground,
+					localUrl:res,
+					oldUrl:req.req.tempFilePaths[0]
+				})
 			})
 		})
 	},
-	onLoad(parmas) {
-		// wx.chooseImage({  
-	    //    count: 1, // 默认9  
-	    //    sizeType: ['original', 'compressed'], // 可以指定是原图还是压缩图，默认二者都有  
-	    //    sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有  
-	    //    success: function (res) {  
-	    //     //  返回选定照片的本地文件路径列表，tempFilePath可以作为img标签的src属性显示图片  
-		// 	uploadOss( res.tempFilePaths[0],'temImg').then(res=>{
-		// 		console.log(res)
-		// 	})
-	    //    }  
-	    //  })  
+	onLoad(parmas) { 
 	},
 	onReady	(){
 		

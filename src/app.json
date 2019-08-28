@@ -1,7 +1,7 @@
 {
 	"pages": [
-		"pages/index/index",
 		"pages/idPtoto/idPtoto",
+		"pages/index/index",
 		"pages/express/express"
 	],
 	"window": {

@@ -1,12 +1,27 @@
 <view class="container">
-	<!-- <view class="hidden-canvas"> -->
-		<canvas style="width:{{w}}rpx;height:{{h}}rpx;" canvas-id="myCanvas"></canvas>
-	<!-- </view> -->
-	<button size="default" type="primary" bindtap="getImg">上传照片</button>
+	<avatar/>
+	<button size="mini" type="primary" bindtap="getImg" class="upImg">上传照片</button>
 	<view class="img-box">
 		<image class="img" src="{{oldUrl}}" />
-		<image wx:if="{{imgUrl}}" class="new-img img" src="{{imgUrl}}"/>
+		<image wx:if="{{imgUrl}}" class="new-img img {{type=='blueIn'?'blue-img':type=='blueOut'?'huzhao-img':type=='white'?'white-img':' '}}" src="{{imgUrl}}"/>
+	</view>
+	<view>
+		<text>选择您需要的证件类型</text>
+		<radio-group class="radio-group" bindchange="changeType">
+			<label class="radio" wx:for="{{types}}">
+				<radio value="{{item.name}}" checked="{{item.checked}}"/>{{item.value}}
+			</label>
+		</radio-group>
+	</view>
+	<view>
+		<text>选择您需要的证件大小</text>
+		<radio-group class="radio-group" bindchange="changeSize">
+			<label class="radio" wx:for="{{sizes}}">
+				<radio value="{{item.name}}" checked="{{item.checked}}"/>{{item.value}}
+			</label>
+		</radio-group>
 	</view>
 	<image src="{{imgUrl}}" bindload='checkwh' mode='widthFix' hidden/>
-	<button  wx:if="{{imgUrl}}" size="default" type="primary" bindtap="oncliak">保存照片</button>
+	<button  wx:if="{{imgUrl}}" size="mini" type="primary" bindtap="oncliak" disabled="{{disabled}}">保存照片</button>
+	<canvas class="mycanvas" style="width:{{w}}px;height:{{h}}px;" canvas-id="myCanvas"></canvas>
 </view>

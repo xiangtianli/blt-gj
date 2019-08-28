@@ -1,3 +1,6 @@
 {
+	"usingComponents": {
+		"avatar": "../../components/avatar/avatar"
+	},
 	"navigationBarTitleText": "证件照生成"
 }

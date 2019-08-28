@@ -57,21 +57,20 @@ export function drwaImg(canvasId,imgUrl,w,h,type,size,cb){
   wx.getImageInfo({
     src: imgUrl,
     success (res) {
+      console.log(res)
       const ctx = wx.createCanvasContext(canvasId)
       const dw=size=='one'?295:size=='twoIn'?413:size=='twoOut'?390:295
       const dh=size=='one'?413:size=='twoIn'?626:size=='twoOut'?567:413
       const bgColor=type=="red"?'rgb(255,0,0)':type=="blueOut"?'rgb(67,142,219)':type=="white"?'rgb(255,255,255)':type=="blueIn"?'rgb(60,140,220)':'rgb(255,0,0)'
       ctx.fillStyle=bgColor;
-      if(w>dw ||h>dh){
-        ctx.fillRect(0,0,w,h);
-        ctx.drawImage(imgUrl,0,0,w,h,0,0,dw,dh);
-      }else{
-        ctx.fillRect(0,0,dw,dh);
-        ctx.drawImage(imgUrl,0,0,dw,dh,0,0,dw,dh);
-      }
-      ctx.draw(false,function(){
-        createImage(canvasId,size,cb)
-      })
+      // if(w>dw ||h>dh){
+      //   ctx.fillRect(0,0,w,h);
+      //   ctx.drawImage(imgUrl,0,0,w,h,0,0,dw,dh);
+      // }else{
+      // }
+      ctx.fillRect(0,0,w,h);
+      ctx.drawImage(res.path,0,0,w,h,0,0,w,h);
+      ctx.draw()
     }
   })
 }

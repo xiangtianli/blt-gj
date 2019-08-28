@@ -2,7 +2,8 @@
 	"pages": [
 		"pages/idPtoto/idPtoto",
 		"pages/index/index",
-		"pages/express/express"
+		"pages/express/express",
+		"pages/canvasUi/canvasUi"
 	],
 	"window": {
 		"backgroundTextStyle": "light",

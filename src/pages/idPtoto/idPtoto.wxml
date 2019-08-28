@@ -22,6 +22,5 @@
 		</radio-group>
 	</view>
 	<image src="{{imgUrl}}" bindload='checkwh' mode='widthFix' hidden/>
-	<button  wx:if="{{imgUrl}}" size="mini" type="primary" bindtap="oncliak" disabled="{{disabled}}">保存照片</button>
-	<canvas class="mycanvas" style="width:{{w}}px;height:{{h}}px;" canvas-id="myCanvas"></canvas>
+	<button  size="mini" type="primary" bindtap="goCanvas">生成照片</button>
 </view>

@@ -1,0 +1,4 @@
+<view class="container">
+	<canvas class="mycanvas" style="width:{{w}}px;height:{{h}}px;" canvas-id="myCanvas"></canvas>
+	<button bindtap="oncliak">生成证件照</button>
+</view>

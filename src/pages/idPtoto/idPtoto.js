@@ -23,48 +23,6 @@ Page({
 			{name: 'twoOut', value: '护照两寸'},
 		]
 	},
-	oncliak(e){
-		const {type,size,w,h,localUrl,ossUrl,disabled} =this.data
-		if(disabled){
-			wx.showToast({
-				title: "操作太快了，稍等片刻",
-				duration: 1000
-			})
-			setTimeout(()=>{
-				this.setData({
-					disabled:false
-				})
-			},1500)
-			return false
-		}
-		drwaImg('myCanvas', ossUrl, w, h,type,size,(res)=>{
-			this.setData({
-				disabled:res.state,
-				timeout:res.timeout
-			})
-		}) 
-		if(localUrl && ossUrl && localUrl===ossUrl){
-			drwaImg('myCanvas', ossUrl, w, h,type,size,(res)=>{
-				this.setData({
-					disabled:res.state,
-					timeout:res.timeout
-				})
-			}) 
-		}else{
-			uploadOss( localUrl,'temImg').then(res=>{
-				this.setData({
-					ossUrl:res.url,
-					localUrl:res.url
-				})
-				drwaImg('myCanvas', res.url, w, h,type,size,(res)=>{
-					this.setData({
-						disabled:res.state,
-						timeout:res.timeout
-					})
-				}) 
-			})
-		}
-	},
 	changeType(e){
 		this.setData({
 			type:e.detail.value
@@ -92,7 +50,11 @@ Page({
 			})
 		})
 	},
-	onLoad(parmas) { 
+	goCanvas(){
+		const {type,size,w,h,ossUrl,} =this.data
+		wx.navigateTo({
+			url: `/pages/canvasUi/canvasUi?imgUrl=${ossUrl}&type=${type}&w=${295}&h=${413}&dw=${400}&dh=${400}`   //实际路径要写全
+		  })
 	},
 	onReady	(){
 		

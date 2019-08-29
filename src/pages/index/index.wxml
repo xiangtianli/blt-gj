@@ -1,19 +1,19 @@
 <view class="container">
   <tianqi/>
   <avatar/>
-  <view class="util-title">工具集</view>
+  <view class="util-title">热门工具</view>
   <view class="util-list">
       <navigator  url="/pages/express/express" class="util-item">
-          <image src="http://pic30.nipic.com/20130619/9885883_210838271000_2.jpg"/>
-          <view>查快递服务>></view>
+          <image src="http://pwzssv5vh.bkt.clouddn.com/icon/kuaidi.png"/>
+          <view>查快递</view>
       </navigator>
       <navigator  url="/pages/idPtoto/idPtoto" class="util-item">
-        <image src="http://pic30.nipic.com/20130619/9885883_210838271000_2.jpg"/>
-        <view>证件照>></view>
+        <image src="http://pwzssv5vh.bkt.clouddn.com/icon/erke.png"/>
+        <view>证件照</view>
       </navigator>
-      <navigator  url="/pages/express/express" class="util-item">
-        <image src="http://pic30.nipic.com/20130619/9885883_210838271000_2.jpg"/>
-        <view>查快递服务>></view>
+      <navigator  url="/pages/idPtoto/idPtoto" class="util-item">
+        <image src="http://pwzssv5vh.bkt.clouddn.com/icon/bianji.png"/>
+        <view>随身账本</view>
       </navigator>
   </view>
 </view>

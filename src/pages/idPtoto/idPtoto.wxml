@@ -1,9 +1,10 @@
 <view class="container">
+	<loading hidden="{{!show}}">
+		正在生成...
+	</loading>
 	<avatar/>
-	<button size="mini" type="primary" bindtap="getImg" class="upImg">上传照片</button>
-	<view class="img-box">
-		<image class="img" src="{{oldUrl}}" />
-		<image wx:if="{{imgUrl}}" class="new-img img {{type=='blueIn'?'blue-img':type=='blueOut'?'huzhao-img':type=='white'?'white-img':' '}}" src="{{imgUrl}}"/>
+	<view class="img-box" bindtap="getImg">
+		<image src="{{oldUrl}}"/>
 	</view>
 	<view>
 		<text>选择您需要的证件类型</text>
@@ -22,5 +23,5 @@
 		</radio-group>
 	</view>
 	<image src="{{imgUrl}}" bindload='checkwh' mode='widthFix' hidden/>
-	<button  size="mini" type="primary" bindtap="goCanvas">生成照片</button>
+	<button  size="mini" type="primary" bindtap="goCanvas" disabled="{{disabled}}">生成照片</button>
 </view>

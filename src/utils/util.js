@@ -52,25 +52,17 @@ export function formatTime(date) {
   }
 }
 
-export function drwaImg(canvasId,imgUrl,w,h,type,size,cb){
-  cb({message:'正在生成',state:true})
+export function drwaImg(canvasId,imgUrl,dw,dh,type,w,h,cb){
   wx.getImageInfo({
     src: imgUrl,
     success (res) {
       console.log(res)
       const ctx = wx.createCanvasContext(canvasId)
-      const dw=size=='one'?295:size=='twoIn'?413:size=='twoOut'?390:295
-      const dh=size=='one'?413:size=='twoIn'?626:size=='twoOut'?567:413
       const bgColor=type=="red"?'rgb(255,0,0)':type=="blueOut"?'rgb(67,142,219)':type=="white"?'rgb(255,255,255)':type=="blueIn"?'rgb(60,140,220)':'rgb(255,0,0)'
       ctx.fillStyle=bgColor;
-      // if(w>dw ||h>dh){
-      //   ctx.fillRect(0,0,w,h);
-      //   ctx.drawImage(imgUrl,0,0,w,h,0,0,dw,dh);
-      // }else{
-      // }
-      ctx.fillRect(0,0,w,h);
-      ctx.drawImage(res.path,0,0,w,h,0,0,w,h);
-      ctx.draw()
+      ctx.fillRect(0,0,dw,dh);
+      ctx.drawImage(res.path,0,0,w,h,0,0,dw,dh);
+      ctx.draw(false,cb)
     }
   })
 }
@@ -87,16 +79,39 @@ export function getBase64Image() {
           "client_id":"fedQDvm9qkARL27o5EsgbGXC",
           "client_secret":"1co8rXV00lrXUGiN628TEEkSEyUANOUB",
         },"https://aip.baidubce.com/oauth/2.0/token").then(res=>{
-        //出图片
           require({
             "access_token":res.access_token,
             "image":encodeURI(base64),
             // "type":'foreground',
-          },'https://aip.baidubce.com/rest/2.0/image-classify/v1/body_seg',{
+          },'https://aip.baidubce.com/rest/2.0/image-classify/v1/body_analysis',{
             "content-type":"application/x-www-form-urlencoded"
           },
           "POST").then(res=>{
-            resolve({res,req})
+            if(res.person_num===0){
+              reject({msg:'未检测到人脸，请从新上传'})
+            }
+            if(res.person_num>1){
+              reject({msg:'监测到人脸数量过多,请从新上传'})
+            }
+            if(res.person_num===1){
+              require({
+                "grant_type":"client_credentials",
+                "client_id":"fedQDvm9qkARL27o5EsgbGXC",
+                "client_secret":"1co8rXV00lrXUGiN628TEEkSEyUANOUB",
+              },"https://aip.baidubce.com/oauth/2.0/token").then(res=>{
+                //出图片
+                require({
+                  "access_token":res.access_token,
+                  "image":encodeURI(base64),
+                  // "type":'foreground',
+                },'https://aip.baidubce.com/rest/2.0/image-classify/v1/body_seg',{
+                  "content-type":"application/x-www-form-urlencoded"
+                },
+                "POST").then(res=>{
+                  resolve({res,req})
+                })
+              })
+            }
           })
         })
       },
@@ -106,23 +121,24 @@ export function getBase64Image() {
     })
  }) 
 }
-export function  createImage(canvasId,size,cb){
-  const dw=size=='one'?295:size=='twoIn'?413:size=='twoOut'?390:295
-  const dh=size=='one'?413:size=='twoIn'?626:size=='twoOut'?567:413
+export function  createImage(canvasId,dw,dh,size){
+  const w=size=='one'?295:size=='twoIn'?413:size=='twoOut'?390:295
+  const h=size=='one'?413:size=='twoIn'?626:size=='twoOut'?567:413
   wx.canvasToTempFilePath({     //将canvas生成图片
     canvasId: canvasId,
     x: 0,
     y: 0,
-    width: dw,
-    height: dh,
-    destWidth: dw,     //截取canvas的宽度
-    destHeight: dh,   //截取canvas的高度
+    width: w,
+    height: h,
+    destWidth: w,
+    destHeight: h, 
+    fileType:'jpg',
+    quality:0.5,
     success: function (res) {
       console.log(res)
-      wx.saveImageToPhotosAlbum({  //保存图片到相册
+      wx.saveImageToPhotosAlbum({
         filePath: res.tempFilePath,
         success: function () {
-          cb({message:'生成成功',state:false})
           wx.showToast({
             title: "生成图片成功！",
             duration: 2000
@@ -131,9 +147,7 @@ export function  createImage(canvasId,size,cb){
       })
     },
     fail(err){
-      cb({message:'生成成功',state:false})
       console.log(err)
-      cb({message:'生成失败'})
     }
   })
 }

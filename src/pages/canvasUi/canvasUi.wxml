@@ -1,4 +1,7 @@
 <view class="container">
-	<canvas class="mycanvas" style="width:{{w}}px;height:{{h}}px;" canvas-id="myCanvas"></canvas>
-	<button bindtap="oncliak">生成证件照</button>
+	<view class="img-box">
+		<image v-if="{{imgUrl}}" src="{{imgUrl}}" class="{{type}}" style="width:{{dw}}px;height:{{dh}}px;"/>
+		<canvas class="mycanvas" style="width:{{dw}}px;height:{{dh}}px;" canvas-id="myCanvas"></canvas>
+	</view>
+	<button size="mini" type="primary"  bindtap="oncliak">保存证件照</button>
 </view>

@@ -8,9 +8,10 @@ Page({
 		type:'red',
 		size:'one',
 		oldUrl:'',
+		show:false,
 		localUrl:null,
 		ossUrl:null,
-		disabled:false,
+		disabled:true,
 		types: [
 			{name: 'red', value: '红底',checked: 'true'},
 			{name: 'blueOut', value: '护照'},
@@ -45,16 +46,31 @@ Page({
 				this.setData({
 					imgUrl:'data:image/jpeg;base64,'+req.res.foreground,
 					localUrl:res,
-					oldUrl:req.req.tempFilePaths[0]
+					oldUrl:req.req.tempFilePaths[0],
+					disabled:false
 				})
+			})
+		}).catch(err=>{
+			wx.showToast({
+				title: err.msg,
+				icon:'none',
+				duration: 2000
 			})
 		})
 	},
 	goCanvas(){
-		const {type,size,w,h,ossUrl,} =this.data
-		wx.navigateTo({
-			url: `/pages/canvasUi/canvasUi?imgUrl=${ossUrl}&type=${type}&w=${295}&h=${413}&dw=${400}&dh=${400}`   //实际路径要写全
-		  })
+		this.setData({
+			show:true
+		})
+		const {type,size,w,h,localUrl,} =this.data
+		uploadOss(localUrl,'tmpImg').then(res=>{
+			wx.navigateTo({
+				url: `/pages/canvasUi/canvasUi?imgUrl=${res.url}&type=${type}&w=${w}&h=${h}&size=${size}`   //实际路径要写全
+			})
+			this.setData({
+				show:false
+			})
+		})
 	},
 	onReady	(){
 		

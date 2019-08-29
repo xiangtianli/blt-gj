@@ -1,60 +1,33 @@
-import {drwaImg, getImgInfo, getBase64Image,createImage, base64src } from '../../utils/util'
-import {uploadOss} from '../../utils/uploadAliyun'
+import {drwaImg,createImage,} from '../../utils/util'
 Page({
 	data: {
 		title: 'canvasUi',
 		w:'',
 		h:'',
 		dw:'',
-		dh:''
+		dh:'',
 	},
 	oncliak(e){
-		const {type,size,w,h,localUrl,ossUrl,disabled} =this.data
-		if(disabled){
-			wx.showToast({
-				title: "操作太快了，稍等片刻",
-				duration: 1000
-			})
-			setTimeout(()=>{
-				this.setData({
-					disabled:false
-				})
-			},1500)
-			return false
-		}
-		drwaImg('myCanvas', 'https://lxt-block.oss-cn-beijing.aliyuncs.com/temImg/1566981763367.png', w, h,'red','one',()=>{
-			console.log(1234)
+		const {dw,dh,w,h,type,size,imgUrl}=this.data
+		drwaImg('myCanvas', imgUrl, dw, dh,type,w,h,()=>{
+			createImage('myCanvas',dw,dh,size)
 		}) 
-		// if(localUrl && ossUrl && localUrl===ossUrl){
-		// 	drwaImg('myCanvas', ossUrl, w, h,type,size,(res)=>{
-		// 		this.setData({
-		// 			disabled:res.state,
-		// 			timeout:res.timeout
-		// 		})
-		// 	}) 
-		// }else{
-		// 	uploadOss( localUrl,'temImg').then(res=>{
-		// 		this.setData({
-		// 			ossUrl:res.url,
-		// 			localUrl:res.url
-		// 		})
-		// 		drwaImg('myCanvas', res.url, w, h,type,size,(res)=>{
-		// 			this.setData({
-		// 				disabled:res.state,
-		// 				timeout:res.timeout
-		// 			})
-		// 		}) 
-		// 	})
-		// }
+	},
+	onShow(){
 	},
 	onLoad(parmas) {
 		console.log(parmas);
-		const {w,h,dh,dw}=parmas
+		const {w,h,type,size,imgUrl}=parmas
+		const dw=size=='one'?295:size=='twoIn'?413:size=='twoOut'?390:295
+		const dh=size=='one'?413:size=='twoIn'?626:size=='twoOut'?567:413
 		this.setData({
 			w,
 			h,
-			dh,
-			dw,
+			dh:dh*0.5,
+			dw:dw*0.5,
+			type,
+			size,
+			imgUrl
 		})
 	},
 });

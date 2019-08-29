@@ -1,10 +1,18 @@
 <view class="container">
 	<picker mode="region" value="region" bindchange="chageCity" >
-		<view class="city-select"><text>{{region[0] ||'北京市'}}</text><text>{{region[1] || "北京市"}}</text><text>{{region[2]||'东城区'}}</text></view>
+		<view class="city-select">当前选择：<text>{{region[0]}}</text><text>{{region[1]}}</text><text>{{region[2]}}</text></view>
 	</picker>
 	<swiper class="swiper">
-    	<swiper-item class="swiper-item" wx:for="{{wethar}}">
-      		{{item.week}}
+    	<swiper-item class="swiper-item" wx:for="{{[1,2]}}">
+      		<view v-if="{{wethar}}" class="tianqi_item">
+				  <image src="{{tianqiUrl}}"/>
+				  <view class="right">
+					  <h2>{{wethar.tem2||'～'}}-{{wethar.tem1||'～'}}度{{wethar.wea}}</h2>
+					  <text>湿度:{{wethar.humidity||'～'}}</text>
+					  <text>空气质量:{{wethar.air_tips||'～'}}</text>
+					  <text>风速:{{wethar.win_speed||'～'}}</text>
+				  </view>
+			</view>
     	</swiper-item>
 	</swiper>
 </view>

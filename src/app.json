@@ -1,15 +1,31 @@
 {
 	"pages": [
-		"pages/idPtoto/idPtoto",
 		"pages/index/index",
+		"pages/idPtoto/idPtoto",
 		"pages/express/express",
-		"pages/canvasUi/canvasUi"
+		"pages/canvasUi/canvasUi",
+		"pages/center/center"
 	],
 	"window": {
 		"backgroundTextStyle": "light",
 		"navigationBarBackgroundColor": "#fff",
 		"navigationBarTitleText": "便民通生活",
 		"navigationBarTextStyle": "black"
+	},
+	"tabBar": {
+		"color":"#3c3636",
+		"selectedColor":"#13227a",
+		"list": [{
+		  "pagePath": "pages/index/index",
+		  "iconPath": "./images/menu.png",
+		  "selectedIconPath": "./images/menuSelect.png",
+		  "text": "首页"
+		}, {
+		  "pagePath": "pages/center/center",
+		  "iconPath": "./images/center.png",
+		  "selectedIconPath": "./images/centerSelect.png",
+		  "text": "个人中心"
+		}]
 	},
 	"plugins": {
 		"express": {

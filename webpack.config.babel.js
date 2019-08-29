@@ -10,7 +10,7 @@ const isDev = NODE_ENV !== 'production'
 const shouldLint = !!LINT && LINT !== 'false'
 const srcDir = resolve('src')
 
-const copyPatterns = []
+const copyPatterns = [{from:'images',to:'images'}]
   .concat(pkg.copyWebpack || [])
   .map(pattern => (typeof pattern === 'string' ? { from: pattern, to: pattern } : pattern))
 

@@ -1,3 +1,3 @@
 <view class="container">
-	Page signIn
+	<button open-type="getUserInfo" bindgetuserinfo="goBack">www</button>
 </view>

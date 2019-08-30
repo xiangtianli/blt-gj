@@ -28,7 +28,7 @@ App(
           }else{
             console.log('wee')
             wx.navigateTo({
-              url: "/pages/signIn/signIn",
+              url: "/pages/signIn/signIn?type=1",
               success:(res)=>{
                 console.log(res)
               }
@@ -48,7 +48,6 @@ App(
         success: () => {
           wx.getUserInfo({
             success: res => {
-              console.log(res)
               this.globalData.userInfo = res.userInfo
               typeof cb === 'function' && cb(this.globalData.userInfo)
             }

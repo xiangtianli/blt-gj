@@ -53,18 +53,39 @@ export function formatTime(date) {
 }
 
 export function drwaImg(canvasId,imgUrl,dw,dh,type,w,h,cb){
-  wx.getImageInfo({
-    src: imgUrl,
-    success (res) {
-      console.log(res)
-      const ctx = wx.createCanvasContext(canvasId)
-      const bgColor=type=="red"?'rgb(255,0,0)':type=="blueOut"?'rgb(67,142,219)':type=="white"?'rgb(255,255,255)':type=="blueIn"?'rgb(60,140,220)':'rgb(255,0,0)'
-      ctx.fillStyle=bgColor;
-      ctx.fillRect(0,0,dw,dh);
-      ctx.drawImage(res.path,0,0,w,h,0,0,dw,dh);
-      ctx.draw(false,cb)
-    }
-  })
+  
+    wx.getImageInfo({
+      src: imgUrl,
+      success (res) {
+        console.log(res)
+        const ctx = wx.createCanvasContext(canvasId)
+        const bgColor=type=="red"?'rgb(255,0,0)':type=="blueOut"?'rgb(67,142,219)':type=="white"?'rgb(255,255,255)':type=="blueIn"?'rgb(60,140,220)':'rgb(255,0,0)'
+        ctx.fillStyle=bgColor;
+        ctx.fillRect(0,0,dw,dh);
+        ctx.drawImage(res.path,0,0,w,h,0,0,dw,dh);
+        ctx.draw(false,cb)
+      }
+    })
+  // }).catch(err=>{
+  //   if(err.code===1){
+  //     wx.showToast({
+  //       title: "监测到您还没有授权，请前往授权",
+  //       icon:'none',
+  //       duration: 1500,
+  //       success:()=>{
+  //         setTimeout(function(){
+  //           wx.navigateTo({
+  //             url: "/pages/signIn/signIn?type=2",
+  //             success:(res)=>{
+  //             }
+  //           })
+  //         },1500)
+  //       }
+  //     })
+  //   }else{
+  //     Error(err)
+  //   }
+  // })
 }
 
 //图片扣人像
@@ -121,6 +142,26 @@ export function getBase64Image() {
     })
  }) 
 }
+//二次授权问题
+export function authSetting(type){
+  return new Promise((resolve,reject)=>{
+    wx.getSetting({
+      success :(res)=>{
+        if(res.authSetting[type]){
+          return resolve(res)
+        }else{
+          wx.openSetting()
+          return reject({code:1})
+        }
+      },
+      fail :(err)=>{
+        return reject({code:0,result:err})
+      }
+    })
+  })
+}
+
+//生成照片
 export function  createImage(canvasId,dw,dh,size){
   const w=size=='one'?295:size=='twoIn'?413:size=='twoOut'?390:295
   const h=size=='one'?413:size=='twoIn'?626:size=='twoOut'?567:413
@@ -143,11 +184,17 @@ export function  createImage(canvasId,dw,dh,size){
             title: "生成图片成功！",
             duration: 2000
           })
-        }
+        },fail:(err=>{
+          wx.showToast({
+            title: "监测到您还没有授权，请前往授权",
+            icon:'none',
+            duration: 1500,
+            success:()=>{
+              wx.openSetting()
+            }
+          })
+        })
       })
     },
-    fail(err){
-      console.log(err)
-    }
   })
 }

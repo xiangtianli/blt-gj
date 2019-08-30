@@ -1,6 +1,6 @@
 var logisticsPlugin = requirePlugin('express');
 import {expressArray, expressList} from "../../utils/constance"
-import {getCollece} from "../../utils/cloud"
+import {getCollece, getData, addData, deleteData} from "../../utils/cloud"
 import {compare} from "../../utils/util"
 
 Page({
@@ -13,7 +13,6 @@ Page({
 		ShipperCode:'',
 		expressZh:'',
 		expressInfo:null,
-		collect:null,
 		history:[]
 	},
 
@@ -24,7 +23,7 @@ Page({
 	},
 	//查询方法
 	queryinfo(LogisticCode, ShipperCode, expressZh, history){
-		const {collect} = this.data 
+		const collect= getCollece('util-gm8h8','express-history')
 		logisticsPlugin.reglogis({
 			LogisticCode,
 			ShipperCode,
@@ -45,23 +44,10 @@ Page({
 						duration: 1500
 					})
 				}
-				!history && collect.add({
-					// data 字段表示需新增的 JSON 数据
-					data: {
-						LogisticCode,
-						ShipperCode,
-						expressZh,
-						date:new Date().getTime()
-					},
-					success:res=>{
-						collect.get({
-							success: res => {
-								this.setData({
-									history: res.data.sort(compare)
-								}) 
-							}
-						})
-					}
+				!history && addData(collect,{LogisticCode,ShipperCode,expressZh,date:new Date().getTime()}).then(res=>{
+					this.setData({
+						history: res.data.sort(compare)
+					})
 				})
 			},
 			error : function (error) { 
@@ -114,45 +100,25 @@ Page({
 
 		})
 	},
-	onLoad(parmas) {
-		this.setData({
-			collect:getCollece('util-gm8h8','express-history')
-		})
-		
-	},
 	onShow(){
-		const {collect} = this.data
-		collect.get({
-			success: res => {
-			  const list =res.data
-			  list.forEach(item=>{
-				  if(new Date().getTime() - item.date>=86400000*7){
-					  console.log(111)
-					collect.doc(item._id).remove({
-						success:res=>{
-							console.log(res)
-						  	this.setData({
-							  history: res.data.sort(compare)
-							}) 
-						}
-					});
-				  }else{
-					collect.get({
-						success: res => {
-							this.setData({
-								history: res.data.sort(compare)
-							}) 
-						}
+		const collect= getCollece('util-gm8h8','express-history')
+		getData(collect,{}).then(res=>{
+			const list =res.data
+			list.forEach(item=>{
+				if(new Date().getTime() - item.date>=86400000*7){
+					deleteData(collect,item._id).then(res=>{
+						this.setData({
+							history: res.data.sort(compare)
+						}) 
 					})
-				  }
-			  })
-			},
-			fail: err => {
-			  wx.showToast({
-				icon: 'none',
-				title: '查询记录失败'
-			  })
-			}
+				}else{
+					getData(collect,{}).then(res=>{
+						this.setData({
+							history: res.data.sort(compare)
+						})
+					})
+				}
+			})
 		})
 	},
 	

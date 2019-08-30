@@ -27,6 +27,29 @@ const pageOption = {
       url: '../logs/logs'
     })
   },
+  onShow(){
+    wx.getSetting({
+      success (res){
+        console.log(res)
+        if (res.authSetting['scope.userInfo']) {
+          // 已经授权，可以直接调用 getUserInfo 获取头像昵称
+          // wx.getUserInfo({
+          //   success: function(res) {
+          //     console.log(res.userInfo)
+          //   }
+          // })
+        }else{
+          console.log('wee')
+          wx.navigateTo({
+            url: "/pages/signIn/signIn",
+            success:(res)=>{
+              console.log(res)
+            }
+          })
+        }
+      }
+    })
+  },
   async onLoad () {
     await delay()
 
@@ -35,7 +58,6 @@ const pageOption = {
       console.log('is alipay mini program: ', __ALIPAY__)
       console.log('DEV: ', __DEV__)
     })
-
     log()
 
     // 调用应用实例的方法获取全局数据

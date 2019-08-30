@@ -1,10 +1,10 @@
 <view class="container">
 	<view class="user-info">
 		<view class="avator">
-			<image src="https://lxt-block.oss-cn-beijing.aliyuncs.com/icon/erke.png"/>
+			<image src="{{userInfo.avatarUrl}}"/>
 		</view>
 		<view class="info">
-			<view class="name">weissadf</view>
+			<view class="name">{{userInfo.nickName}}</view>
 		</view>
 	</view>
 	<vlew>

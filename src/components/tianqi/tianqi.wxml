@@ -1,18 +1,19 @@
 <view class="container">
-	<picker mode="region" value="region" bindchange="chageCity" >
-		<view class="city-select">当前选择：<text>{{region[0]}}</text><text>{{region[1]}}</text><text>{{region[2]}}</text></view>
-	</picker>
-	<swiper class="swiper">
-    	<swiper-item class="swiper-item" wx:for="{{[1,2]}}">
-      		<view v-if="{{wethar}}" class="tianqi_item">
-				  <image src="{{tianqiUrl}}"/>
-				  <view class="right">
-					  <h2>{{wethar.tem2||'～'}}-{{wethar.tem1||'～'}}度{{wethar.wea}}</h2>
-					  <text>湿度:{{wethar.humidity||'～'}}</text>
-					  <text>空气质量:{{wethar.air_tips||'～'}}</text>
-					  <text>风速:{{wethar.win_speed||'～'}}</text>
-				  </view>
+	<swiper class="swiper" bindchange="currentchange">
+		<swiper-item class="swiper-item" wx:for="{{wethar}}">
+			<picker mode="region" value="{{region}}" bindchange="chageCity" >
+				<view class="city-select">当前选择：<text>{{region[0]}}</text><text>{{region[1]}}</text><text>{{region[2]}}</text></view>
+			</picker>
+			<view class="tianqi_item">
+				  	<image src="{{tianqiUrl}}"/>
+				  	<view class="right">
+					  	<h2>{{item.tem2||'～'}}-{{item.tem1||'～'}}度{{item.wea}}</h2>
+					  	<text>湿度:{{item.humidity||'～'}}</text>
+					  	<text>空气质量:{{item.air_tips||'～'}}</text>
+					  	<text>风速:{{item.win_speed||'～'}}</text>
+				  	</view>
 			</view>
     	</swiper-item>
 	</swiper>
+	<view class="tip">右划可添加两个城市</view>
 </view>

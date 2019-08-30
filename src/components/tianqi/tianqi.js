@@ -29,7 +29,7 @@ Component({
 				const tianqi = res.wea_img
 				this.setData({
 					wethar:res,
-					tianqiUrl:`http://pwzssv5vh.bkt.clouddn.com/${tianqi}.png`
+					tianqiUrl:`https://lxt-block.oss-cn-beijing.aliyuncs.com/icon/${tianqi}.png`
 				})
 			})
 			this.setData({

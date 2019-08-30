@@ -1,3 +1,13 @@
 <view class="container">
-	Page center
+	<view class="user-info">
+		<view class="avator">
+			<image src="https://lxt-block.oss-cn-beijing.aliyuncs.com/icon/erke.png"/>
+		</view>
+		<view class="info">
+			<view class="name">weissadf</view>
+		</view>
+	</view>
+	<vlew>
+
+	</vlew>
 </view>

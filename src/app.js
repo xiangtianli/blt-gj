@@ -1,4 +1,3 @@
-import { camelCase } from 'lodash'
 import { init } from '@rematch/core'
 import immerPlugin from '@rematch/immer'
 import loadingPlugin from '@rematch/loading'
@@ -15,14 +14,31 @@ const store = init({
 App(
   Provider(store)({
     onLaunch() {
-      console.log(camelCase('OnLaunch'))
       wx.cloud.init()
-      // 调用API从本地缓存中获取数据
-      const logs = wx.getStorageSync('logs') || []
-      logs.unshift(Date.now())
-      wx.setStorageSync('logs', logs)
+      wx.getSetting({
+        success (res){
+          console.log(res)
+          if (res.authSetting['scope.userInfo']) {
+            // 已经授权，可以直接调用 getUserInfo 获取头像昵称
+            // wx.getUserInfo({
+            //   success: function(res) {
+            //     console.log(res.userInfo)
+            //   }
+            // })
+          }else{
+            console.log('wee')
+            wx.navigateTo({
+              url: "/pages/signIn/signIn",
+              success:(res)=>{
+                console.log(res)
+              }
+            })
+          }
+        }
+      })
     },
     getUserInfo(cb) {
+      console.log(this.globalData.userInfo)
       if (this.globalData.userInfo) {
         typeof cb === 'function' && cb(this.globalData.userInfo)
         return
@@ -32,10 +48,13 @@ App(
         success: () => {
           wx.getUserInfo({
             success: res => {
+              console.log(res)
               this.globalData.userInfo = res.userInfo
               typeof cb === 'function' && cb(this.globalData.userInfo)
             }
           })
+        },fail:err=>{
+          console.log(err)
         }
       })
     },

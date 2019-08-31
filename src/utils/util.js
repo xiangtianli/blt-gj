@@ -53,7 +53,6 @@ export function formatTime(date) {
 }
 
 export function drwaImg(canvasId,imgUrl,dw,dh,type,w,h,cb){
-  
     wx.getImageInfo({
       src: imgUrl,
       success (res) {
@@ -73,13 +72,7 @@ export function drwaImg(canvasId,imgUrl,dw,dh,type,w,h,cb){
   //       icon:'none',
   //       duration: 1500,
   //       success:()=>{
-  //         setTimeout(function(){
-  //           wx.navigateTo({
-  //             url: "/pages/signIn/signIn?type=2",
-  //             success:(res)=>{
-  //             }
-  //           })
-  //         },1500)
+  //        cb2()
   //       }
   //     })
   //   }else{
@@ -162,7 +155,7 @@ export function authSetting(type){
 }
 
 //生成照片
-export function  createImage(canvasId,dw,dh,size){
+export function  createImage(canvasId,dw,dh,size,cb){
   const w=size=='one'?295:size=='twoIn'?413:size=='twoOut'?390:295
   const h=size=='one'?413:size=='twoIn'?626:size=='twoOut'?567:413
   wx.canvasToTempFilePath({     //将canvas生成图片
@@ -184,16 +177,25 @@ export function  createImage(canvasId,dw,dh,size){
             title: "生成图片成功！",
             duration: 2000
           })
-        },fail:(err=>{
-          wx.showToast({
-            title: "监测到您还没有授权，请前往授权",
-            icon:'none',
-            duration: 1500,
-            success:()=>{
-              wx.openSetting()
-            }
-          })
-        })
+        },
+        fail:function(e){
+          if(e.errMsg=="saveImageToPhotosAlbum:fail auth deny"){
+            wx.showToast({
+              title: "需要授权",
+              duration: 2000,
+              icon:'none',
+              success:function(){
+                setTimeout(cb,1500)
+              }
+            })
+          }else{
+            wx.showToast({
+              title: "生成失败",
+              duration: 2000,
+              icon:'none'
+            })
+          }
+        }
       })
     },
   })

@@ -6,12 +6,30 @@ Page({
 		h:'',
 		dw:'',
 		dh:'',
+		auto:true,
 	},
 	oncliak(e){
 		const {dw,dh,w,h,type,size,imgUrl}=this.data
 		drwaImg('myCanvas', imgUrl, dw, dh,type,w,h,()=>{
-			createImage('myCanvas',dw,dh,size)
+			createImage('myCanvas',dw,dh,size,()=>{
+				this.setData({
+					auto:false
+				})
+			})
 		}) 
+	},
+	bindopensetting(e){
+		if(e.detail.authSetting['scope.writePhotosAlbum']){
+			this.setData({
+				auto:true
+			})	
+		}else{
+			wx.showToast({
+				title: '授权失败',
+				duration: 2000,
+				icon:'none'
+			})
+		}
 	},
 	onShow(){
 	},

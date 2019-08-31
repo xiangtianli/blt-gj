@@ -4,24 +4,28 @@
 	</loading>
 	<avatar/>
 	<view class="img-box" bindtap="getImg">
-		<image src="{{oldUrl}}"/>
+		<image wx:if="{{oldUrl}}" src="{{oldUrl}}"/>
+		<view wx:else class="upimg">点击上传图片</view>
 	</view>
-	<view>
-		<text>选择您需要的证件类型</text>
+	<view class="select">
+		<text>选择您需要的证件类型:</text>
 		<radio-group class="radio-group" bindchange="changeType">
 			<label class="radio" wx:for="{{types}}">
 				<radio value="{{item.name}}" checked="{{item.checked}}"/>{{item.value}}
 			</label>
 		</radio-group>
 	</view>
-	<view>
-		<text>选择您需要的证件大小</text>
+	<view class="select">
+		<text>选择您需要的证件大小:</text>
 		<radio-group class="radio-group" bindchange="changeSize">
 			<label class="radio" wx:for="{{sizes}}">
 				<radio value="{{item.name}}" checked="{{item.checked}}"/>{{item.value}}
 			</label>
 		</radio-group>
+		<button  size="mini" type="primary" bindtap="goCanvas" disabled="{{disabled}}">生成照片</button>
 	</view>
 	<image src="{{imgUrl}}" bindload='checkwh' mode='widthFix' hidden/>
-	<button  size="mini" type="primary" bindtap="goCanvas" disabled="{{disabled}}">生成照片</button>
+	<view class="tip">
+		提示：为保证您的证件照能一次通过，请认真选择您要修改的照片！！
+	</view>
 </view>

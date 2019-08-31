@@ -1,7 +1,10 @@
 <view class="container">
 	<view class="img-box">
-		<image v-if="{{imgUrl}}" src="{{imgUrl}}" class="{{type}}" style="width:{{dw}}px;height:{{dh}}px;"/>
+		<image wx:if="{{imgUrl}}" src="{{imgUrl}}" class="{{type}}" style="width:{{dw}}px;height:{{dh}}px;"/>
 		<canvas class="mycanvas" style="width:{{dw}}px;height:{{dh}}px;" canvas-id="myCanvas"></canvas>
 	</view>
-	<button size="mini" type="primary"  bindtap="oncliak">保存证件照</button>
+	<view class="caozuo">
+		<button wx:if="{{auto}}" size="mini" type="primary"  bindtap="oncliak">保存证件照</button>
+		<button type="primary" wx:else open-type="openSetting" bindopensetting="bindopensetting">去授权</button>
+	</view>
 </view>

@@ -34,6 +34,9 @@ Component({
 		}
 	},
 	methods:{
+		url(type){
+			return `https://lxt-block.oss-cn-beijing.aliyuncs.com/icon/${type}/.png`
+		},
 		currentchange(e){
 			const {cityList,wethar} =this.data
 			const value=cityList[e.detail.current] && cityList[e.detail.current]['cityArr'][1].slice(0,-1)||''
@@ -48,9 +51,9 @@ Component({
 		//获取天气
 		queryWeath(value,current){
 			const {wethar} =this.data
-			require({appid: 81981832, appsecret: "JnFFC61x", version:'v6',city:value},'https://www.tianqiapi.com/api/').then(res=>{
+			require({appid: 81981832, appsecret: "JnFFC61x", version:'v1',city:value},'https://www.tianqiapi.com/api/').then(res=>{
 				const tianqi = res.wea_img
-				wethar[current] =res
+				wethar[current] =res.data
 				this.setData({
 					wethar,
 					tianqiUrl:`https://lxt-block.oss-cn-beijing.aliyuncs.com/icon/${tianqi}.png`

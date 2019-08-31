@@ -4,14 +4,18 @@
 			<picker mode="region" value="{{region}}" bindchange="chageCity" >
 				<view class="city-select">当前选择：<text>{{region[0]}}</text><text>{{region[1]}}</text><text>{{region[2]}}</text></view>
 			</picker>
-			<view class="tianqi_item">
-				  	<image src="{{tianqiUrl}}"/>
-				  	<view class="right">
-					  	<h2>{{item.tem2||'～'}}-{{item.tem1||'～'}}度{{item.wea}}</h2>
-					  	<text>湿度:{{item.humidity||'～'}}</text>
-					  	<text>空气质量:{{item.air_tips||'～'}}</text>
-					  	<text>风速:{{item.win_speed||'～'}}</text>
-				  	</view>
+			<view class="tianqi-list">
+				<view class="tianqi_item" wx:for="{{wethar[current]}}">
+						<!-- <image src="url(item.wea)" /> -->
+						<view wx:if="{{item.wea_img}}" class="wea-img" style="background-image:url(https://lxt-block.oss-cn-beijing.aliyuncs.com/icon/{{item.wea_img}}.png);"></view>
+						<view class="right">
+							<h2>{{item.tem2||'～'}}-{{item.tem1||'～'}}{{item.wea}}</h2>
+							<text>{{item.date||'～'}}{{item.week}}</text>
+							<text>湿度:{{item.humidity||'～'}}</text>
+							<text>空气质量:{{item.air_tips||'～'}}</text>
+							<text>风速:{{item.win_speed||'～'}}</text>
+						</view>
+				</view>
 			</view>
     	</swiper-item>
 	</swiper>

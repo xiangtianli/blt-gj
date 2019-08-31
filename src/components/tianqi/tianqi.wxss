@@ -1,0 +1,56 @@
+.container {
+  width: 100%;
+}
+.container .city-select {
+  color: #f0f;
+}
+.container .swiper {
+  margin: 20rpx auto;
+  height: 360rpx;
+}
+.container .swiper .swiper-item {
+  box-sizing: border-box;
+}
+.container .swiper .swiper-item .tianqi-list {
+  overflow-y: scroll;
+  height: 360rpx;
+}
+.container .swiper .swiper-item .tianqi-list .tianqi_item {
+  background: linear-gradient(to top, rgba(26, 115, 232, 0.8), rgba(255, 192, 203, 0.3));
+  display: flex;
+  padding-left: 45rpx;
+  height: 360rpx;
+}
+.container .swiper .swiper-item .tianqi-list .tianqi_item .wea-img {
+  width: 90rpx;
+  height: 75rpx;
+  padding: 20rpx;
+  margin-right: 60rpx;
+  margin-top: 90rpx;
+  background-size: 90rpx;
+  background-repeat: no-repeat;
+}
+.container .swiper .swiper-item .tianqi-list .tianqi_item image {
+  width: 130rpx;
+  height: 75rpx;
+  margin-right: 60rpx;
+  margin-top: 90rpx;
+}
+.container .swiper .swiper-item .tianqi-list .tianqi_item .right {
+  margin: 16rpx;
+}
+.container .swiper .swiper-item .tianqi-list .tianqi_item .right h2 {
+  font-size: 48rpx;
+  font-weight: 900;
+}
+.container .swiper .swiper-item .tianqi-list .tianqi_item .right text {
+  display: block;
+  font-size: 30rpx;
+  line-height: 46rpx;
+}
+.container .tip {
+  background-image: -webkit-linear-gradient(left, #147B96, #E6D205 25%, #147B96 50%, #E6D205 75%, #147B96);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-align: center;
+}

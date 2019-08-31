@@ -15,27 +15,7 @@ App(
   Provider(store)({
     onLaunch() {
       wx.cloud.init()
-      wx.getSetting({
-        success (res){
-          console.log(res)
-          if (res.authSetting['scope.userInfo']) {
-            // 已经授权，可以直接调用 getUserInfo 获取头像昵称
-            // wx.getUserInfo({
-            //   success: function(res) {
-            //     console.log(res.userInfo)
-            //   }
-            // })
-          }else{
-            console.log('wee')
-            wx.navigateTo({
-              url: "/pages/signIn/signIn?type=1",
-              success:(res)=>{
-                console.log(res)
-              }
-            })
-          }
-        }
-      })
+
     },
     getUserInfo(cb) {
       console.log(this.globalData.userInfo)

@@ -1,0 +1,47 @@
+page {
+  height: 100%;
+  width: 100%;
+}
+page .container {
+  width: 100%;
+  padding: 20rpx;
+  box-sizing: border-box;
+  background: #fff;
+}
+page .container .upImg {
+  text-align: center;
+  margin: 40rpx auto;
+}
+page .container .img-box {
+  width: 289rpx;
+  height: 413rpx;
+  border: 1px solid #f00;
+  margin: 20rpx auto;
+}
+page .container .img-box image {
+  width: 100%;
+  height: 100%;
+}
+page .container .img-box .upimg {
+  margin: auto;
+  text-align: center;
+  line-height: 413rpx;
+  color: #f00;
+  font-size: 40rpx;
+}
+page .container .select {
+  text-align: center;
+  line-height: 60rpx;
+}
+page .container .select .radio {
+  margin-right: 24rpx;
+}
+page .container .select button {
+  margin-top: 20rpx;
+}
+page .container .tip {
+  background: #f5f5f5;
+  color: #7743cf;
+  padding: 20rpx;
+  border-radius: 8rpx;
+}

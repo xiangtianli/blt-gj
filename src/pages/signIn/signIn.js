@@ -7,16 +7,24 @@ Page({
 	},
 	goBack(e){
 		console.log(e)
+		let title="授权成功"
+		if(e.detail.errMsg=='getUserInfo:fail auth deny'){
+			title='授权失败'
+		}else{
+			title='授权成功'
+		}
 		wx.showToast({
-			title: "授权成功",
+			title: title,
 			icon:'none',
 			duration: 1500,
 			success:()=>{
-			  setTimeout(function(){
-				wx.navigateBack({
-					delta: 1
-				})
-			  },1500)
+				if(title=='授权成功'){
+					setTimeout(function(){
+					  wx.navigateBack({
+						  delta: 1
+					  })
+					},1500)
+				}
 			}
 		})
 		

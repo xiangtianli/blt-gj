@@ -1,0 +1,30 @@
+.container {
+  padding: 20rpx;
+}
+.container .img-box {
+  position: relative;
+}
+.container .img-box canvas {
+  margin: auto;
+}
+.container .img-box image {
+  position: absolute;
+  transform: translateX(-50%);
+  left: 50%;
+}
+.container .img-box .red {
+  background: #ff0000;
+}
+.container .img-box .blueOut {
+  background: #438edb;
+}
+.container .img-box .white {
+  background: #ffffff;
+}
+.container .img-box .blueIn {
+  background: #ff0000 l;
+}
+.container .caozuo {
+  margin: 40rpx auto;
+  text-align: center;
+}

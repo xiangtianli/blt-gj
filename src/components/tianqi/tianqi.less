@@ -8,27 +8,40 @@
 		height:360rpx;
 		.swiper-item{
 			box-sizing: border-box;
-			.tianqi_item{
-				background:  linear-gradient(to top, rgba(26,115,232,.8), rgba(255,192,203,0.3));
-				padding: 20rpx;
-				display: flex;
-				padding-left: 45rpx;
-				image{
-					width: 130rpx;
-					height: 75rpx;
-					margin-right: 60rpx;
-					margin-top: 90rpx;
-				}
-				.right{
-					margin:40rpx;
-					h2{
-						font-size: 48rpx;
-						font-weight: 900;
+			.tianqi-list{
+				overflow-y: scroll;
+				height:360rpx;
+				.tianqi_item{
+					background:  linear-gradient(to top, rgba(26,115,232,.8), rgba(255,192,203,0.3));
+					display: flex;
+					padding-left: 45rpx;
+					height:360rpx;
+					.wea-img{
+						width: 90rpx;
+						height: 75rpx;
+						padding: 20rpx;
+						margin-right: 60rpx;
+						margin-top: 90rpx;
+						background-size: 90rpx;
+						background-repeat: no-repeat;
 					}
-					text{
-						display: block;
-						font-size: 30rpx;
-						line-height: 46rpx;
+					image{
+						width: 130rpx;
+						height: 75rpx;
+						margin-right: 60rpx;
+						margin-top: 90rpx;
+					}
+					.right{
+						margin:16rpx;
+						h2{
+							font-size: 48rpx;
+							font-weight: 900;
+						}
+						text{
+							display: block;
+							font-size: 30rpx;
+							line-height: 46rpx;
+						}
 					}
 				}
 			}

@@ -18,13 +18,13 @@ Page({
 			icon:'none',
 			duration: 1500,
 			success:()=>{
-				if(title=='授权成功'){
+				// if(title=='授权成功'){
 					setTimeout(function(){
 					  wx.navigateBack({
 						  delta: 1
 					  })
 					},1500)
-				}
+				// }
 			}
 		})
 		

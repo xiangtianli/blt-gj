@@ -11,9 +11,9 @@
         <image src="https://lxt-block.oss-cn-beijing.aliyuncs.com/icon/erke.png"/>
         <view>证件照</view>
       </navigator>
-      <navigator  url="/pages/idPtoto/idPtoto" class="util-item">
+      <!-- <navigator  url="/pages/idPtoto/idPtoto" class="util-item">
         <image src="https://lxt-block.oss-cn-beijing.aliyuncs.com/icon/bianji.png"/>
         <view>随身账本</view>
-      </navigator>
+      </navigator> -->
   </view>
 </view>

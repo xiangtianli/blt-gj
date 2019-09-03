@@ -167,7 +167,7 @@ export function  createImage(canvasId,dw,dh,size,cb){
     destWidth: w,
     destHeight: h, 
     fileType:'jpg',
-    quality:0.5,
+    quality:1,
     success: function (res) {
       console.log(res)
       wx.saveImageToPhotosAlbum({

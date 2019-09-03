@@ -1,16 +1,20 @@
 
-const app = getApp() 
+const app = getApp()
 Page({
 	data: {
 		title: 'center',
-		userInfo:null
+		userInfo: null
 	},
-
-	onLoad(params) {
-		console.log(app);
-
+	goBack(e){
+		console.log(e)
 		this.setData({
-			userInfo:app.globalData.userInfo
+			userInfo: e.detail.userInfo
+		})
+	},
+	onShow(params) {
+		app.getUserInfo(userInfo => {
+			// 更新数据
+			this.setData({ userInfo })
 		})
 	},
 });

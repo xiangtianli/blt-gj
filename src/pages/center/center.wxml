@@ -4,7 +4,8 @@
 			<image src="{{userInfo.avatarUrl}}"/>
 		</view>
 		<view class="info">
-			<view class="name">{{userInfo.nickName}}</view>
+			<view wx:if="{{userInfo}}" class="name">{{userInfo.nickName}}</view>
+			<button wx:else type="primary" size="mini" open-type="getUserInfo" bindgetuserinfo="goBack">立即登录</button>
 		</view>
 	</view>
 	<vlew>
